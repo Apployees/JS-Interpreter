@@ -2973,6 +2973,9 @@ Interpreter.Object.prototype.toString = function() {
       cycles.pop();
     }
     return message ? name + ': ' + message : String(name);
+  } else if (this.class === "Object" && this.properties.toString && this.properties.toString.nativeFunc) {
+    // at the very least support a synchronous native function call.
+    return this.properties.toString.nativeFunc();
   }
 
   if (this.data !== null) {
